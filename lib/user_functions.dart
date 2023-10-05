@@ -11,19 +11,17 @@ void checkEmailToGetUser() {
 }
 
 //rework someday right now idfc
-bool loginUser() {
- 
-auth.signInWithEmailAndPassword(
-        email: controllerinputemail.text.toString(),
-        password: controllerinputpassword.text.toString());
+Future<bool> loginUser() async {
+  UserCredential result = await auth.signInWithEmailAndPassword(
+      email: controllerinputemail.text.toString(),
+      password: controllerinputpassword.text.toString());
 
-if (auth.currentUser != null) {
-  return true;
-} else {
-  return false;
+  if (auth.currentUser != null) {
+    return true;
+  } else {
+    return false;
+  }
 }
-}
-
 
 Widget buildTickets(List<Ticket> tickets) => ListView.builder(
     itemCount: tickets.length,
@@ -39,28 +37,28 @@ Widget buildTickets(List<Ticket> tickets) => ListView.builder(
           subtitle: Text(ticket.subject),
           onTap: () {
             showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(ticket.subject),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(ticket.name),
-                    Text(ticket.email),
-                    Text(ticket.message),
-                  ],
-                ),
-                actions: [
-                  FloatingActionButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0))),
-                ],
-              );
-            });
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text(ticket.subject),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(ticket.name),
+                        Text(ticket.email),
+                        Text(ticket.message),
+                      ],
+                    ),
+                    actions: [
+                      FloatingActionButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8.0))),
+                    ],
+                  );
+                });
           },
         ),
       );

@@ -6,6 +6,8 @@ import 'package:junghof_app_v2/settings.dart';
 import 'package:junghof_app_v2/login_screen.dart';
 import 'package:junghof_app_v2/user_functions.dart';
 
+import 'calendar.dart';
+
 String accountNames = 'displayName';
 String accountEmail = 'Junghof.istcool@balou.woof';
 String accountAnon = 'Anonym';
@@ -26,7 +28,8 @@ class NavBar extends StatelessWidget {
             accountEmail: Text(accountEmail.toString()),
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
-                child: Image.network( // Testing asset function to load pfp in the background
+                child: Image.network(
+                  // Testing asset function to load pfp in the background
                   navbar_pfp.toString(),
                   fit: BoxFit.cover,
                   width: 90,
@@ -50,7 +53,10 @@ class NavBar extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.calendar_today),
             title: const Text('Kalender'),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const BookCalendar()));
+            },
           ),
           ListTile(
             leading: const Icon(Icons.note),

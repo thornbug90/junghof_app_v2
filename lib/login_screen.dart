@@ -4,10 +4,7 @@ import 'package:junghof_app_v2/main.dart';
 import 'package:junghof_app_v2/navbar.dart';
 import 'package:junghof_app_v2/user_functions.dart';
 
-import 'package:firebase_database/firebase_database.dart';
-
-
-
+// import 'package:firebase_database/firebase_database.dart';
 
 class LoginDemo extends StatefulWidget {
   const LoginDemo({super.key});
@@ -16,9 +13,9 @@ class LoginDemo extends StatefulWidget {
   State<LoginDemo> createState() => _LoginDemoState();
 }
 
-FirebaseDatabase database = FirebaseDatabase.instance;
+// FirebaseDatabase database = FirebaseDatabase.instance;
 
-DatabaseReference ref = FirebaseDatabase.instance.ref();
+// DatabaseReference ref = FirebaseDatabase.instance.ref();
 
 // Create Auth Instance
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -27,7 +24,7 @@ String name = '';
 String email = '';
 String password = '';
 
-String  navbar_pfp = '';
+String navbar_pfp = '';
 
 /*Controller for Email and Password field to pass the value to
 the firebase auth service*/
@@ -61,6 +58,7 @@ class _LoginDemoState extends State<LoginDemo> {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
                 controller: controllerinputemail,
+                autofocus: true,
                 decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -95,30 +93,30 @@ class _LoginDemoState extends State<LoginDemo> {
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: FloatingActionButton(
-                onPressed: () {
-               if (!loginUser()) {
-                
-               }
-               
-               else 
-               {
- // todo: rework doesnt work
-                  checkEmailToGetUser(); //this will detect and setup the correct displayname
+                onPressed: () async {
+                  bool islogin = await loginUser();
+                  if (!islogin) {
+                  } else {
+                    // todo: rework doesnt work
+                    checkEmailToGetUser(); //this will detect and setup the correct displayname
 
-                  //this will load the users pfp. currently a placeholder and i should add it to a function later im lazzy rn lol
-                  navbar_pfp = 'https://raw.githubusercontent.com/CakeClicker/AppPictures/main/output-onlinepngtools%20(2).png';
+                    //this will load the users pfp. currently a placeholder and i should add it to a function later im lazzy rn lol
+                    navbar_pfp =
+                        'https://raw.githubusercontent.com/CakeClicker/AppPictures/main/output-onlinepngtools%20(2).png';
 
-                  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-                    if (user != null) {
-                      print(user.uid);
-                      accountNames = user.displayName.toString();
-                      accountEmail = user.email.toString();
-                    }
-                  });
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          const MyHomePage(title: 'Junghof e.v.')));
-               }
+                    FirebaseAuth.instance
+                        .authStateChanges()
+                        .listen((User? user) {
+                      if (user != null) {
+                        print(user.uid);
+                        accountNames = user.displayName.toString();
+                        accountEmail = user.email.toString();
+                      }
+                    });
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) =>
+                            const MyHomePage(title: 'Junghof e.v.')));
+                  }
                 },
                 child: const Text(
                   'Login',
