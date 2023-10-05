@@ -50,8 +50,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<List<Ticket>> ticketFuture = getTickets();
 
   static Future<List<Ticket>> getTickets() async {
+    // const url =
+    //     'https://raw.githubusercontent.com/CakeClicker/AppPictures/main/myJsonFile0.json';
     const url =
-        'https://raw.githubusercontent.com/CakeClicker/AppPictures/main/myJsonFile0.json';
+        'https://raw.githubusercontent.com/CakeClicker/AppPictures/main/test.json';
+
     final response = await http.get(Uri.parse(url));
 
     final body = json.decode(response.body);
